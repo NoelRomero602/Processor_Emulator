@@ -15,4 +15,12 @@ unistd.h
 -
 sys/wait.h
 -
+fstream
+-
+iostream
+-
+string
+-
+sstream
+-
 
