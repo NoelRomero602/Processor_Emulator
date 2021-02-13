@@ -87,6 +87,14 @@ int pid;
 
 int index = 0;
 
+int testing = 55;
+
+    int PC = 0 ;
+    int SP = 0 ;
+    int IR = 0;
+    int AC = 0;
+    int X = 0;
+    int Y = 0;
 
     while (!infile.eof())
     {
@@ -98,10 +106,6 @@ int index = 0;
     }
 
 
-    for(int i = 0; i< index ; i++)
-    {
-        cout<<"\n"<<memory_obj.list[i];
-    }
 
 if (pipe(pipefds1) == -1)
 {
@@ -113,36 +117,128 @@ if(pipe(pipefds2) == -1 )
     error_exit("unable to create pipe2");
 }
 
+
+int j = 0;
+
     pid = fork();
+    while (processor_obj.IR != 50) {
+        j++;
+    if (pid != 0) {
 
-  if(pid != 0)
-  {
-      close(pipefds1[0]); // Close the unwanted pipe1 read side
-      close(pipefds2[1]); // Close the unwanted pipe2 write side
-      cout<<"\n inside of parent";
+        close(pipefds1[0]); // Close the unwanted pipe1 read side
+        close(pipefds2[1]); // Close the unwanted pipe2 write side
+        cout << "\n inside of parent";
 
-      char readmessage[20];
+        char readmessage[20];
 
-      write(pipefds1[1], &processor_obj.PC,sizeof(int));
+        write(pipefds1[1], &processor_obj.PC, sizeof(int));
 
-      read(pipefds2[0],readmessage,sizeof(readmessage));
+        read(pipefds2[0], &processor_obj.IR, sizeof(int));
 
-      printf("\n At parent this is message from child %s  ", readmessage);
 
-  }
-  else
-  {
-      close(pipefds1[1]); // Close the unwanted pipe1 write side
-      close(pipefds2[0]); // Close the unwanted pipe2 read side
+        switch(processor_obj.IR) {
+            case 1:
+                // code block
+                break;
+            case 2:
+                // code block
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
+            case 13:
+                break;
+            case 14:
+                break;
+            case 15:
+                break;
+            case 16:
+                break;
+            case 17:
+                break;
+            case 18:
+                break;
+            case 19:
+                break;
+            case 20:
+                break;
+            case 21:
+                break;
+            case 22:
+                break;
+            case 23:
+                break;
+            case 24:
+                break;
+            case 25:
+                break;
+            case 26:
+                break;
+            case 27:
+                break;
+            case 28:
+                break;
+            case 29:
+                break;
+            case 30:
+                break;
+            case 50:
+                cout<<"\nEnding program";
+                break;
 
-      read(pipefds1[1],&memory_obj.index,sizeof(int) );
+            default:
+                cout<<"default case";
+                // code block
+        }
 
-      printf("\n At the child value returned from parent is: %d ", memory_obj.index);
-      printf("\n value in the array to be returned: %s", memory_obj.getListValueAtIndex().c_str());
 
-      write
-  }
 
+        printf("\n At parent this is message from child %d   and PC is %d", processor_obj.IR, processor_obj.PC);
+        ++processor_obj.PC;
+
+
+
+
+
+    } else {
+
+        close(pipefds1[1]); // Close the unwanted pipe1 write side
+        close(pipefds2[0]); // Close the unwanted pipe2 read side
+        char readmessage[20];
+
+
+        read(pipefds1[0], &X, sizeof(int));
+        // cout<<"\n work plz"<< memory_obj.index;
+        printf("\n At the child value returned from parent is: %c ", X);
+        string temp = memory_obj.list[X];
+
+        istringstream parser(temp);
+
+        parser >> Y;
+        cout<<"\n At child value in the array to be returned: "<<Y ;
+
+
+        write(pipefds2[1], &Y, sizeof(int));
+
+    }
+}
 
   //  printf("\n%s",String.c_str());
 
