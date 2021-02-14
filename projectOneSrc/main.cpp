@@ -399,8 +399,8 @@ index = 0;
 
                 break;
             case 50:
-              //  cout<<"\nEnding program";
-              //  cout<<"\n50 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+                cout<<"\nEnding program";
+                cout<<"\n50 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC << "Y = "<<processor_obj.Y ;
 
                 break;
 
