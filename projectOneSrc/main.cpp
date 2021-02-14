@@ -16,7 +16,6 @@
 
 using namespace std;
 
-int  add_vector(int v[]);
 void error_exit(string s);
 
 
@@ -117,7 +116,7 @@ if(pipe(pipefds2) == -1 )
 
 index = 0;
     pid = fork();
-    while ((processor_obj.IR != 50) && index <= 50 ) {
+    while ((processor_obj.IR != 50) && index <= 150 ) {
 
     if (pid != 0) {
      ++index;
@@ -166,11 +165,18 @@ index = 0;
                 break;
             case 4:
                 ++processor_obj.PC;
+                write(pipefds1[1], &processor_obj.PC, sizeof(int)); // getting address
+                read(pipefds2[0], &processor_obj.IR, sizeof(int)); // getting address
+                processor_obj.AC = processor_obj.IR + processor_obj.X; // setting address + X into AC
+                cout<<"\nCase FOUR AC address "<<processor_obj.AC;
+
+                write(pipefds1[1], &processor_obj.AC, sizeof(int)); // loading value at address
+                read(pipefds2[0], &processor_obj.AC, sizeof(int)); // loading value at address into AC
+
+                ++processor_obj.PC; // move PC to point to the next instruction
+
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &processor_obj.IR, sizeof(int));
-                processor_obj.AC = processor_obj.IR + processor_obj.X;
-                ++processor_obj.PC;
-
                 cout<<"\nFour case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
@@ -202,10 +208,10 @@ index = 0;
 
                 if(port ==1)
                 {
-                    cout<<"\n"<<processor_obj.AC;
+                    cout<<"\n port 1"<<processor_obj.AC;
                 } else if(port == 2)
                 {
-                    cout<<"\n"<< (char) processor_obj.AC;
+                    cout<<"\nport 2"<< (char) processor_obj.AC;
                 }
                 else
                 {
