@@ -111,18 +111,18 @@ if(pipe(pipefds2) == -1 )
 {
     error_exit("unable to create pipe2");
 }
-
+int temp = -100;
 
 
 index = 0;
     pid = fork();
-    while ((processor_obj.IR != 50) && index <= 150 ) {
+    while ((processor_obj.IR != 50) && index <= 160 ) {
 
     if (pid != 0) {
      ++index;
         close(pipefds1[0]); // Close the unwanted pipe1 read side
         close(pipefds2[1]); // Close the unwanted pipe2 write side
-        //cout << "\n inside of parent";
+        cout << "\n inside of parent";
         int port = -1000;
 
 
@@ -148,19 +148,19 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));// write PC to mem
                 read(pipefds2[0], &processor_obj.IR, sizeof(int)); // get the new instruction
 
-                cout<<"\nOne case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\nOne case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 // code block
                 break;
             case 2:
 
-                cout<<"\n 2  case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n 2  case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 // code block
                 break;
             case 3:
 
-                cout<<"\n 3 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+               // cout<<"\n 3 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 4:
@@ -168,7 +168,7 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int)); // getting address
                 read(pipefds2[0], &processor_obj.IR, sizeof(int)); // getting address
                 processor_obj.AC = processor_obj.IR + processor_obj.X; // setting address + X into AC
-                cout<<"\nCase FOUR AC address "<<processor_obj.AC;
+              //  cout<<"\nCase FOUR AC address "<<processor_obj.AC;
 
                 write(pipefds1[1], &processor_obj.AC, sizeof(int)); // loading value at address
                 read(pipefds2[0], &processor_obj.AC, sizeof(int)); // loading value at address into AC
@@ -177,28 +177,52 @@ index = 0;
 
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &processor_obj.IR, sizeof(int));
-                cout<<"\nFour case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\nFour case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 5:
+                ++processor_obj.PC;
+                write(pipefds1[1], &processor_obj.PC, sizeof(int)); // getting address
+                read(pipefds2[0], &processor_obj.IR, sizeof(int)); // getting address
+                processor_obj.AC = processor_obj.IR + processor_obj.Y; // setting address + Y into AC
+              //  cout<<"\nCase FIVE AC address "<<processor_obj.AC;
 
-                cout<<"\nFive case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+                write(pipefds1[1], &processor_obj.AC, sizeof(int)); // loading value at address
+                read(pipefds2[0], &processor_obj.AC, sizeof(int)); // loading value at address into AC
+
+                ++processor_obj.PC; // move PC to point to the next instruction
+
+                write(pipefds1[1], &processor_obj.PC, sizeof(int));
+                read(pipefds2[0], &processor_obj.IR, sizeof(int));
+            //    cout<<"\nFive case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC<<"Y ="<<processor_obj.Y;
 
                 break;
             case 6:
+                ++processor_obj.PC;
+                write(pipefds1[1], &processor_obj.PC, sizeof(int)); // getting address
+                read(pipefds2[0], &processor_obj.IR, sizeof(int)); // getting address
+                processor_obj.AC = processor_obj.IR + processor_obj.Y; // setting address + Y into AC
+              //  cout<<"\nCase FIVE AC address "<<processor_obj.AC;
 
-                cout<<"\nSix case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+                write(pipefds1[1], &processor_obj.AC, sizeof(int)); // loading value at address
+                read(pipefds2[0], &processor_obj.AC, sizeof(int)); // loading value at address into AC
+
+                ++processor_obj.PC; // move PC to point to the next instruction
+
+                write(pipefds1[1], &processor_obj.PC, sizeof(int));
+                read(pipefds2[0], &processor_obj.IR, sizeof(int));
+              //  cout<<"\nSix case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 7:
 
-                cout<<"\nSeven case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\nSeven case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
 
                 break;
             case 8:
 
-                cout<<"\n eight case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n eight case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
                 break;
             case 9:
 
@@ -206,9 +230,11 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &port, sizeof(int));
 
+//                write(pipefds1[1], &processor_obj.AC, sizeof(int)); // loading value at address
+//                read(pipefds2[0], &processor_obj.AC, sizeof(int)); // loading value at address into AC
                 if(port ==1)
                 {
-                    cout<<"\n port 1"<<processor_obj.AC;
+                    cout<<"\n port 1: "<<processor_obj.AC;
                 } else if(port == 2)
                 {
                     cout<<"\nport 2"<< (char) processor_obj.AC;
@@ -221,24 +247,34 @@ index = 0;
                 ++processor_obj.PC;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &processor_obj.IR, sizeof(int));
-                cout<<"\nNine case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\nNine case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 10:
-                cout<<"\nTen case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
+                processor_obj.X = processor_obj.AC + processor_obj.X; // add ac to value in x
+                ++processor_obj.PC; // move PC up one
+                write(pipefds1[1], &processor_obj.PC, sizeof(int));
+                read(pipefds2[0], &processor_obj.IR, sizeof(int));
+            //    cout<<"\n 11 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC<<"Y = "<<processor_obj.Y;
+
+
+             //   cout<<"\nTen case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
                 break;
             case 11:
-
-                cout<<"\n 11 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+                    processor_obj.Y = processor_obj.AC + processor_obj.Y; // add ac to value in y
+                    ++processor_obj.PC; // move PC up one
+                write(pipefds1[1], &processor_obj.PC, sizeof(int));
+                read(pipefds2[0], &processor_obj.IR, sizeof(int));
+              //  cout<<"\n 11 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC<<"Y = "<<processor_obj.Y;
 
                 break;
             case 12:
-                cout<<"\n 12 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n 12 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 13:
-                cout<<"\n13 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n13 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 14:
@@ -247,31 +283,36 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int)); // send pc to mem
                 read(pipefds2[0], &processor_obj.IR, sizeof(int));// retrieve new instruction
 
-                cout<<"\n14 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n14 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 15:
-                cout<<"\n15 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+
+              //  cout<<"\n15 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC<<"Y ="<<processor_obj.Y;
 
                 break;
             case 16:
+                processor_obj.Y = processor_obj.AC; // copy AC into Y
+                ++processor_obj.PC; // move Pc up one
+                write(pipefds1[1], &processor_obj.PC, sizeof(int)); // send pc to mem
+                read(pipefds2[0], &processor_obj.IR, sizeof(int));// retrieve new instruction
 
-                cout<<"\n16 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n16 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 17:
 
-                cout<<"\n17 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n17 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 18:
 
-                cout<<"\n18 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+             //   cout<<"\n18 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 19:
 
-                cout<<"\n19 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n19 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 20:
@@ -284,7 +325,7 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &processor_obj.IR, sizeof(int)); // get the instruction from that new address
 
-                cout<<"\n20 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n20 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 21:
@@ -297,6 +338,7 @@ index = 0;
 
                     write(pipefds1[1], &processor_obj.PC, sizeof(int));
                     read(pipefds2[0], &processor_obj.IR, sizeof(int));
+                    ++processor_obj.PC;
                 }
                 else
                 {
@@ -305,21 +347,21 @@ index = 0;
                     read(pipefds2[0], &processor_obj.IR, sizeof(int));
 
                 }
-                cout<<"\n21 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+             //   cout<<"\n21 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 22:
-                cout<<"\n22 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n22 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 23:
 
-                cout<<"\n23 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+             //   cout<<"\n23 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 24:
 
-                cout<<"\n24 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n24 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 25:
@@ -328,37 +370,37 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &processor_obj.IR, sizeof(int));
 
-                cout<<"\n25 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+             //   cout<<"\n25 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 26:
 
-                cout<<"\n26 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n26 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 27:
 
-                cout<<"\n27 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\n27 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 28:
 
-                cout<<"\n28 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+            //    cout<<"\n28 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 29:
 
-                cout<<"\n29 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+           //     cout<<"\n29 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 30:
 
-                cout<<"\n30 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+            //    cout<<"\n30 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
             case 50:
-                cout<<"\nEnding program";
-                cout<<"\n50 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
+              //  cout<<"\nEnding program";
+              //  cout<<"\n50 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
                 break;
 
