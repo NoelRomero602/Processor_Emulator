@@ -12,7 +12,7 @@
 #include <sstream>
 
 #include <algorithm>
-#define N 3
+
 
 using namespace std;
 
@@ -91,14 +91,7 @@ int index = 0; //debugging purposes
     int X = 0;
     int Y = 0;
 
-    while (!infile.eof())
-    {
-        getline(infile,content);
-        if(content != "") {
-            memory_obj.populateMemory(content, index);
-            ++index;
-        }
-    }
+
 
 
 
@@ -116,7 +109,19 @@ int temp = -100;
 
 index = 0;
     pid = fork();
-    while ((processor_obj.IR != 50) && index <= 200 ) {
+
+    if(pid == 0)
+    {
+        while (!infile.eof())
+        {
+            getline(infile,content);
+            if(content != "") {
+                memory_obj.populateMemory(content, index);
+                ++index;
+            }
+        }
+    }
+    while ((processor_obj.IR != 50)  ) {
 
     if (pid != 0) {
      ++index;
@@ -138,6 +143,7 @@ index = 0;
                 cout<<"\nzero case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
                 break;
             case 1:
+
 
                 ++processor_obj.PC; // move pc
                 write(pipefds1[1], &processor_obj.PC, sizeof(int)); // write PC to mem
@@ -233,10 +239,10 @@ index = 0;
 
                if(port ==1)
                 {
-                    cout<<"\n port 1: "<<processor_obj.AC;
+                    cout<<"\n port 1 : "<<processor_obj.AC;
                 } else if(port == 2)
                 {
-                    cout<<"\nport 2"<< (char) processor_obj.AC;
+                    cout<<"\nport 2 : "<< (char) processor_obj.AC;
                 }
                 else
                 {
@@ -345,7 +351,10 @@ index = 0;
 
                 }
                 cout<<"\n21 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
-
+                if(processor_obj.IR -1 == 0)
+                {
+                    --processor_obj.PC;
+                }
                 break;
             case 22:
                 cout<<"\n22 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
