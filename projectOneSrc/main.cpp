@@ -380,16 +380,6 @@ index = 0;
                 if(processor_obj.AC != 0)
                 {
 
-                    processor_obj.PC = processor_obj.PC +2;
-                    write(pipefds1[1], &processor_obj.PC, sizeof(int));
-                    read(pipefds2[0], &processor_obj.IR, sizeof(int));
-
-
-
-
-                }
-                else
-                {
 
                     ++processor_obj.PC;
                     write(pipefds1[1], &processor_obj.PC, sizeof(int));
@@ -399,6 +389,18 @@ index = 0;
                     write(pipefds1[1], &processor_obj.PC, sizeof(int));
                     read(pipefds2[0], &processor_obj.IR, sizeof(int));
                     ++processor_obj.PC;
+
+
+
+
+
+                }
+                else
+                {
+
+                    processor_obj.PC = processor_obj.PC +2;
+                    write(pipefds1[1], &processor_obj.PC, sizeof(int));
+                    read(pipefds2[0], &processor_obj.IR, sizeof(int));
 
                 }
 
