@@ -73,12 +73,29 @@ public:
 };
 
 
-int main()
+int main(int argc, char*argv[])
 {
 Processor processor_obj ;
 ifstream  infile;
 Memory memory_obj;
-infile.open("./sample2.txt");
+
+
+if(argc > 1)
+{
+    //cout<<argv[0];
+   infile.open(argv[1]);
+
+  if(!infile)
+  {
+      cout<<"\nCould not open file"<<argv[1];
+      return EXIT_FAILURE;
+  }
+}
+else
+{
+    infile.open("./sample2.txt");
+}
+
 string content;
 srand(time(NULL));
 int pipefds1[2], pipefds2[2];
@@ -87,14 +104,7 @@ int pid;
 
 int index = 0; //debugging purposes
 
-
-
-    int X = 0;
-    int Y = 0;
-
-
-
-
+int X = 0;
 
 if (pipe(pipefds1) == -1)
 {
@@ -107,24 +117,24 @@ if(pipe(pipefds2) == -1 )
 }
 int temp = -100;
 
-
-    while (!infile.eof())
-    {
-        getline(infile,content);
-        if(content != "") {
-            memory_obj.populateMemory(content, index);
-            ++index;
-        }
-    }
-
 index = 0;
     pid = fork();
 
     if(pid == 0)
     {
 
+        while (!infile.eof())
+        {
+            getline(infile,content);
+            if(content != "") {
+                memory_obj.populateMemory(content, index);
+                ++index;
+            }
+        }
        // cout<<"\n inside of child\n";
     }
+
+    infile.close();
     index = 0;
     while ((processor_obj.IR != 50  )  ) {
 
@@ -134,10 +144,6 @@ index = 0;
         close(pipefds2[1]); // Close the unwanted pipe2 write side
 
         int port = -1000;
-
-
-
-
 
 
         switch(processor_obj.IR) {
@@ -218,11 +224,7 @@ index = 0;
                 read(pipefds2[0], &processor_obj.AC, sizeof(int)); // load what was in SP + X into AC
 
                 processor_obj.SP[0] = processor_obj.IR; // restore the stack pointer
-               // cout<<"\n";
-//                for(int i = 990; i < 1000; i++ )
-//                {
-//                    cout<<"SP["<<i<<"] ="<<memory_obj.list[i];
-//                }
+
                 ++processor_obj.PC; // go on to the next instruction
 
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
@@ -234,7 +236,6 @@ index = 0;
 
             //   cout<<"\nSeven case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
 
-
                 break;
             case 8:
 
@@ -245,7 +246,6 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &processor_obj.IR, sizeof(int));
             //    cout<<"\n8 case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC;
-
 
                 break;
             case 9:
@@ -270,7 +270,6 @@ index = 0;
                 write(pipefds1[1], &processor_obj.PC, sizeof(int));
                 read(pipefds2[0], &processor_obj.IR, sizeof(int));
              //   cout<<"\nNine case"<<"IR = "<<processor_obj.IR <<"PC = "<<processor_obj.PC <<"X = "<<processor_obj.X <<"AC ="<< processor_obj.AC<< "Y = "<<processor_obj.Y;
-
                 break;
             case 10:
 
@@ -384,7 +383,6 @@ index = 0;
                 if(processor_obj.AC != 0)
                 {
 
-
                     ++processor_obj.PC;
                     write(pipefds1[1], &processor_obj.PC, sizeof(int));
                     read(pipefds2[0], &processor_obj.IR, sizeof(int));
@@ -393,10 +391,6 @@ index = 0;
                     write(pipefds1[1], &processor_obj.PC, sizeof(int));
                     read(pipefds2[0], &processor_obj.IR, sizeof(int));
                     ++processor_obj.PC;
-
-
-
-
 
                 }
                 else
@@ -526,14 +520,10 @@ index = 0;
         close(pipefds1[1]); // Close the unwanted pipe1 write side
         close(pipefds2[0]); // Close the unwanted pipe2 read side
         int  readMsg[] = {-1000, -1000};
-    //    cout<<"\n";
-//        for(int i = 990; i < 1000; i++ )
-//        {
-//            cout<<"SP["<<i<<"] ="<<memory_obj.list[i];
-//        }
 
         read(pipefds1[0], &readMsg, sizeof(readMsg)); // value from Parent proccess PC register gets stored into X
-            if(readMsg[1] != -1000)
+        int Y = 0;
+        if(readMsg[1] != -1000)
             {
 
                 memory_obj.list[readMsg[0]] = to_string(readMsg[1]);
@@ -562,15 +552,8 @@ index = 0;
     }
 }
 
-
-
-infile.close();
-
-
     return 0;
 }
-
-
 
 void error_exit(string s)
 {
