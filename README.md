@@ -8,9 +8,12 @@ TO COMPILE AND RUN
 1. Open the terminal and change to the directory where main.cpp and the sample files are.
 
 2. Type the following to compile:
-g++ main.cpp -o main
+
+g++ main.cpp -std=c++0x -o main
+
 	or
-g++ main.cpp
+g++ main.cpp -std=c++0x 
+
 
 3. To run program do the following:
 ./main "filename" "timerINT"
