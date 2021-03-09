@@ -16,6 +16,8 @@ g++ main.cpp -std=c++0x
 
 
 3. To run program do the following:
+
+
 ./main "filename" "timerINT"
 	or
 ./a.out "filename" "timerINT"
