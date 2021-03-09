@@ -1,0 +1,74 @@
+1 // Load 72 = H
+72
+9  // output
+2  // output as a character
+1 // load  73 = I
+73
+9 // output to console
+2
+23 // jump to 63
+67
+1 // 77 = M
+77
+9 // character
+2 // output as a character
+1 // load 89 = y
+89
+9
+2
+23 // jump to 65
+67
+1 // 78 = N
+78
+9
+2
+1 // 65 = A
+65
+9
+2
+1 // load 77 = m
+77
+9
+2
+1 // load 69 = E
+69
+9
+2
+23  // jump to 65
+67
+1 // load 73 = i
+73
+9
+2
+1 // load 83 = s
+83
+9
+2
+23 // jump to 65
+67
+1 // load  78 = N
+78
+9
+2
+1 // load  79  = o
+79
+9
+2
+1 // load 69 = e
+69
+9
+2
+1 // load 76 = L
+76
+9
+2
+23
+67
+50
+1   // Load 10=newline
+10
+9   // Put 2
+2
+24  // Return
+.1000
+30 // interupt handler - just return
